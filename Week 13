@@ -1,0 +1,176 @@
+//Fibonacci
+
+
+package recursion;
+
+import java.util.Arrays;
+
+/**
+ *
+ * @author Ace
+ */
+public class Fibonacci {
+
+    static int[] fibArray;
+
+    // initialize the static variables
+    static {
+        fibArray = new int[100];
+        Arrays.fill(fibArray, 0);
+        fibArray[0] = 1;
+        fibArray[1] = 1;
+    }
+    public static void main(String[] args){
+        fibonacci_inproved(9);
+        for(int fib : fibArray) System.out.println(fib);
+    }
+    
+    public static int fibonacci_inproved(int n) {
+        int index = n - 1;
+        if (fibArray[index] > 0) {
+            return fibArray[index];
+        }
+        int result = fibonacci_inproved(n - 1) + fibonacci_inproved(n - 2);
+        fibArray[index] = result;
+        return result;
+    }
+    private static int fibonacci(int n) {
+       if (n == 0) {
+           return 0;
+       }
+       if (n == 1) {
+           return 1;
+       }
+       return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
+
+
+//Recursion
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab13;
+
+/**
+ *
+ * @author Ace
+ */
+public class Lab13Recursion {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        // Problem 1
+        System.out.println(recursive_factorial(0));
+      
+        // PRoblem 2
+       // System.out.println(countMoney1(6));
+        
+        // Problem 3
+       // System.out.println(countMoney2(6));
+        
+        // Problem 4
+        // TODO code application logic here
+      //  System.out.println(christmasComing("hx"));
+      //  System.out.println(christmasComing("christmasiscoming"));
+       
+        
+        
+
+    }
+    
+    private static int recursive_factorial(int n) {
+        // A method to calculate a factorial recursively
+        // Simplest cases, return 1 if empty set
+       if (n == 0) {
+           return 1;
+       } else {
+           // Otherwise, calls itself recursively until 0
+           // returns n * (calls itself -1)
+           return (n * recursive_factorial(n - 1));
+       }
+    }
+
+    public static int countMoney1(int students){
+        // A method to calculate the total number of money
+        // We assume 1 student has 7 RMB - base case!
+        // 0 students obviously return 0 RMB
+        
+        // first cover 2 base cases
+        if(students ==0){
+            return 0;
+        }
+        if(students == 1){
+            return 7;
+        }
+        
+        // Once base has been called, if number is not base case
+        // call recursively, assume 1 student, i.e. this one so add 7 rmb
+        return 7 + countMoney1(students-1);
+    }
+    
+     public static int countMoney2(int students){
+        // A method to calculate the total number of money
+        // We assume 1 student has 7 RMB - base case!
+        // Don't need to modify base case
+        // 0 students obviously return 0 RMB
+        // Just change the condition
+        
+        // first cover 2 base cases
+        if(students ==0){
+            return 0;
+        }
+        if(students == 1){
+            return 7;
+        }
+        
+        // Once base has been called, if number is not base case
+        // call recursively, if 3rd student, then add 11, else 7
+        if(students%3==0){
+            // every third student
+            return 11 + countMoney2(students-1);
+        }
+        else {
+            // Every other case
+            return 7 + countMoney2(students-1);
+        }
+        
+    }
+    
+    public static String christmasComing(String str) {
+
+       // A bit more tricky.  Essentially requires substring work
+       // Simplest case is an empty string, or a single letter
+       // if it is an "s" replace it with santa.  Else, leave it unchanged
+
+       // Base case, empty
+        if (str.length() == 0) {
+            return "";
+        }
+        // base case, a single letter, change String or leave it unchanged
+        if (str.length() == 1) {
+            if (str.equals("s")) {
+                return "Santa";
+            } else {
+                return str;
+            }
+        }
+
+        // Some test code
+       // System.out.println("First is " + str.substring(0, 1));
+        //System.out.println("Remain is" + str.substring(1, str.length()));
+       // System.out.println("");
+
+       // First of all check the first character, then check the remaining
+        return christmasComing(str.substring(0, 1)) + christmasComing(str.substring(1, str.length()));
+
+    }
+
+}
