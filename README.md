@@ -3,6 +3,9 @@
 Lab questions:
 Code of questions on JAVA lab
 
+Weekly lab or homework:
+Contains works in weekly classes and labs
+
 
 Coursework3:
 Task
@@ -12,7 +15,4 @@ code an application to display this information. You should also write a short
 report.
 
 Pictograph
-A pictograph displays data using pictures. Every pictograph has a title, label, key, 
-and some pictures or symbols. You should use your graphics and programming knowledge to create your own, 
-given your chosen dataset. Your design and colour should be unique to you, and 
-you should pay attention to OOP principles as taught this semester. You may reuse and re-purpose code and classes developed and used (by you) in the Labs
+A pictograph displays data using pictures. Every pictograph has a title, label, key, and some pictures or symbols. You should use your graphics and programming knowledge to create your own, given your chosen dataset. Your design and colour should be unique to you, and you should pay attention to OOP principles as taught this semester. You may reuse and re-purpose code and classes developed and used (by you) in the Labs
