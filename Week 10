@@ -1,0 +1,304 @@
+//Event
+package lab12.time;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+
+public class Event {
+
+    private LocalTime startTime;
+    private LocalDate startDate;
+    private LocalTime endTime;
+    private LocalDate endDate;
+    private String what;
+
+    public Event(String what, LocalDateTime start, LocalDateTime end) {
+        this.startDate = LocalDate.from(start);
+        this.startTime = LocalTime.from(start);
+        this.endDate = LocalDate.from(end);
+        this.endTime = LocalTime.from(end);
+        this.what = what;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public String getWhat() {
+        return what;
+    }
+
+    public boolean periodOverlaps(LocalDate query) {
+        if (query.isAfter(startDate) && query.isBefore(endDate)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+
+//Memory
+
+package lab12.time;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.ListIterator;
+
+
+public class Memory {
+
+    private ArrayList<Event> myEvents = new ArrayList();
+
+    public static void main(String[] args) {
+        Memory m = new Memory();
+    }
+
+    public Memory() {
+        // System.out.println("Memories Constructor");
+
+        // add memories
+        addMemories();
+
+        viewMemories();
+
+        LocalDateTime eventCheck = LocalDateTime.of(2017, Month.DECEMBER, 15, 0, 0, 0);
+        checkMemory(eventCheck);
+
+    }
+
+    private void viewMemories() {
+
+        // THis method uses an iterator to loop through the arraylist
+        // If the event is less than one day then display a different message with times
+        // Loop through events and display them
+        // Use the getters and setters
+        ListIterator<Event> iter = myEvents.listIterator();
+
+        while (iter.hasNext()) {
+            Event e = iter.next();
+            //System.out.println("Event " +e.getWhat() +" from " +e.getStartDate() + " to " + e.getEndDate());
+
+            // Check the period is less than 1 day, i.e. days, months years are all zero
+            Period time = Period.between(e.getStartDate(), e.getEndDate());
+
+            int days = time.getDays();
+            int months = time.getMonths();
+            int years = time.getMonths();
+
+            // If the period is less than a day
+            if (days + months + years == 0) {
+                System.out.println("Event: " + e.getWhat() + " was on " + e.getStartDate()
+                        + " from " + e.getStartTime() + " till " + e.getEndTime());
+            } // Else   
+            else {
+                // Just show dates
+                System.out.println("Event: " + e.getWhat() + " was on the dates " + e.getStartDate()
+                        + " to " + e.getEndDate());
+            }
+            System.out.println("    ***   ");
+        }
+    }
+
+    private void addMemories() {
+        // Constructor to add 3 memories
+
+        LocalDateTime eventStart = LocalDateTime.of(2017, Month.MARCH, 7, 12, 0, 0);
+        LocalDateTime eventEnd = eventStart.plusWeeks(6);
+        Event e = new Event("visiting Scotland", eventStart, eventEnd);
+        myEvents.add(e);
+
+        eventStart = LocalDateTime.of(2017, Month.JUNE, 7, 12, 0, 0);
+        eventEnd = eventStart.plusWeeks(3);
+        e = new Event("visiting Germany", eventStart, eventEnd);
+        myEvents.add(e);
+
+        eventStart = LocalDateTime.of(2017, 8, 7, 12, 0, 0);
+        eventEnd = eventStart.plusHours(6);
+        e = new Event("Summer Festival", eventStart, eventEnd);
+        myEvents.add(e);
+    }
+
+    private void checkMemory(LocalDateTime d) {
+        // Receives a date
+        // Check by iterating through loop
+        // If any events on that day, then display a message
+
+        ListIterator<Event> iter = myEvents.listIterator();
+
+        // convert date time to localdate
+        LocalDate locDate = d.toLocalDate();
+        
+        // check an event was found
+        boolean found = false;
+
+        System.out.println("Looking for event that happens on " + locDate);
+
+        while (iter.hasNext()) {
+            // Get the event
+            Event e = iter.next();
+
+            // use the event method to check
+            boolean overl = e.periodOverlaps(locDate);
+            if (overl) {
+                System.out.println(e.getWhat() + " was on the chosen date " + locDate);
+                found = true;
+            }
+            //System.out.println(overl);
+        }
+        if(found==false){
+            System.out.println("No events on the chosen date " + locDate);
+        }
+
+    }
+
+}
+
+
+//Validate
+
+
+public class Validate {
+    
+
+public static boolean validateString(String input) {
+    
+        //HIDE
+        //EDIT 
+String name = "enter name here";
+    //EDIT 
+String student_id = "enter student id here";
+    
+    //HIDE
+        // Check the length of the string first, does it match
+        // a valid string is 22 characters
+        if(input.length()!= 22){
+        	//System.out.print("the lenght is wrong.  ");
+           return false;
+        }
+        
+        // Assuming that we have passed the first test, we can check that the 
+        // ISBN is correct
+        String isbn = input.substring(0, 4).toUpperCase();
+        if (!isbn.equals("ISBN")) {
+        	//System.out.print("It does not start with ISBN.  ");
+            return false;
+        } 
+        
+        if(input.charAt(4)!=' '){
+    		//System.out.print("Space is wrong.  ");
+            return false;
+        }
+        
+        // If it passes this stage, next, check hyphens
+        // Check character at 8, 10, 14, 20
+        // Dont have to do it in separate methods
+    	if(input.charAt(8)!='-'){
+    		//System.out.print("Hyphen is wrong.  ");
+            return false;
+        }
+    	if(input.charAt(10)!='-'){
+    		//System.out.print("Hyphen is wrong.  ");
+            return false;
+        }
+    	if(input.charAt(14)!='-'){
+    	//	System.out.print("Hyphen is wrong.  ");
+            return false;
+        }
+    	if(input.charAt(20)!='-'){
+    	//	System.out.print("Hyphen is wrong. ");
+            return false;
+        }
+        // "ISBN 978-0-273-72131-4";
+        // If all hyphens
+        // Check exceptions, check each group of chars is an integer
+		try{
+			Integer.parseInt(input.substring(5, 8));
+			Integer.parseInt(input.substring(9,10));
+			Integer.parseInt(input.substring(11,14));
+			Integer.parseInt(input.substring(11,13));
+			Integer.parseInt(input.substring(15,20));
+			Integer.parseInt(input.substring(21,22));
+			
+		}catch(NumberFormatException e) {
+			//System.out.print("digits are wrong.  ");
+			return false;
+		}
+        return true;
+//EDIT
+    }
+
+}
+
+
+
+//Validationtester
+
+public class ValidationTester {
+
+    public static void main(String[] args) {
+
+// entering name and student id
+        String[] inputs = new String[16];
+        inputs[0] = "ISBN 978-0-273-72131-4";
+        inputs[1] = "ISBN 978-3-540-74549-5";
+        inputs[2] = "ISBN 978-0-273-53333-4";
+        inputs[3] = "isbn 978-9-273-72131-4";
+        inputs[4] = ""; // empty string
+        inputs[5] = "ISCN-978-0-273-72131-4";
+        inputs[6] = "ISBN 97a-0-273-72131-4";
+        inputs[7] = "ISBN 978-b-273-72131-4";
+        inputs[8] = "ISBN 978-0-2v3-72131-4";
+        inputs[9] = "ISBN 978-0-273-7d131-4";
+        inputs[10] = "ISBN 978-0-273-72131-e";
+        inputs[11] = "ISBN 978 0-273-72131-4";
+        inputs[12] = "ISBN 978-0:273-72131-4";
+        inputs[13] = "ISBN 978-0-273/72131-4";
+        inputs[14] = "ISBN 978-0-273-72131/4";
+        inputs[15] = "ISBN 978-0-273-72131-42";
+
+        boolean[] res = {true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false};
+
+        for (int i = 0; i < inputs.length; i++) {
+            System.out.println("Test Case " + i + ".");
+            System.out.println("Your output: " + Validate.validateString(inputs[i]));
+
+            System.out.println("Expected: " + res[i]);
+            System.out.println();
+        }
+        System.out.print("Score: ");
+        for (int i = 0; i < inputs.length; i++) {
+
+            if (res[i] == true) {
+                System.out.print("1");
+            } else {
+                System.out.print("0");
+            }
+            if (i < (inputs.length - 1)) {
+                System.out.print(",");
+            }
+        }
+        System.out.println("");
+    }
+
+}
+
