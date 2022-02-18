@@ -1,0 +1,426 @@
+//lab 9 file
+
+package lab9;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+public class FileUtils {
+    
+    // This shoudl all come from the lecture notes!
+    public static void writeFile(String destination, List<StockPrice> toWrite) {
+
+        Path path = Paths.get(destination);
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            for (StockPrice p : toWrite) {
+                // Will need to create a flattedn meth
+                writer.write(p.flatten());
+                writer.newLine();
+            }
+            System.out.println("File Written");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+}
+
+
+
+//homework
+
+package homework;
+
+import lab9.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+
+public class HW9 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+            
+        // Read stocks from file
+        List<Transaction> transactions =HWFileUtils.readFile("transactions.csv");
+      //   displayTrans(transactions); 
+         
+         // Sort with comparable
+         //Collections.sort(transactions);
+       //  HWFileUtils.writeFile("transactions_sort.csv", transactions);
+         
+         
+         // check codes
+         int frauds = 0;
+        // create an iterator
+        Iterator iterator = transactions.iterator();
+        // Loop through iterator and search
+        while (iterator.hasNext()) {       
+            // Convert first value to stock
+           Transaction sNext = (Transaction)iterator.next();
+           
+            // check match
+            if (!checkValid(sNext.getCheckCode())) {
+               // System.out.println("Fraud, removing from list");
+                iterator.remove();
+                frauds++;
+            }
+            else {
+             //   System.out.println("Transaction valid");
+            }
+        }
+        // if not found, report
+        
+        // final mesage
+        System.out.println("Number of fraudulent transactions is " + frauds);
+
+
+    }
+
+     
+      // Display transactions
+    public static void displayTrans(List<Transaction> trans) {
+
+        for (Transaction p : trans) {
+            System.out.println("Transaction is " + p.toString());
+        }
+    }
+    
+    // Check code is valid
+    public static boolean checkValid(String code){
+        // Generate transaction
+        // A transaction is a 19 digit code
+        // 4 4 digit blocks, separated by a hyphen xxxx-xxxx-xxxx-xxxx
+        // last 4 is month and year (11/2019 = 1119)
+        // first 4 are last 4 of senders code
+        // third block are a check that when added together, add up to 9
+        // second dont matter
+        boolean valid = true;
+        
+        // check length
+        if(code.length()!=19){
+            System.out.println("Transaction not of correct length");
+            return false;
+        }
+        //System.out.println(code.length());
+        
+        // Check 4 blocks by string split
+        String[] arr = code.split("-");
+        if(arr.length!=4){
+            System.out.println("Transaction had incorrect number of blocks");
+            return false;
+        }
+        
+        //Third block add up to 9
+        int val1 = Integer.parseInt(arr[2].substring(0, 1));
+        int val2 = Integer.parseInt(arr[2].substring(1, 2));
+        int val3 = Integer.parseInt(arr[2].substring(2, 3));
+        int val4 = Integer.parseInt(arr[2].substring(3, 4));
+        
+        int total = val1+val2+val3+val4;
+        
+        if(total!=9){
+            System.out.println("Transaction did not add up to 9");
+            return false;
+        }
+       
+      return valid;  
+    }
+
+}
+
+
+
+//lab 9
+package lab9;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+
+public class Lab9 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        // 5 Stock Prices
+        StockPrice s1 = new StockPrice("AAPL", "1/12/2006", 91.8, 92.33, 90.1, 91.32, 28395700);
+        StockPrice s2 = new StockPrice("AAPL", "4/12/2006", 91.88, 92.05, 90.5, 91.12, 25340600);
+        StockPrice s3 = new StockPrice("AAPL", "5/12/2006", 91.655, 92.33, 90.87, 91.27, 23672800);
+        StockPrice s4 = new StockPrice("AAPL", "6/12/2006", 90.645, 91.39, 89.67, 89.83, 22792300);
+        StockPrice s5 = new StockPrice("AAPL", "7/12/2006", 90.025, 90.5, 86.9, 87.04, 35886700);
+
+        // add to an arraylist
+        List<StockPrice> stocks = new ArrayList<>();
+        stocks.add(s1);
+        stocks.add(s2);
+        stocks.add(s3);
+        stocks.add(s4);
+        stocks.add(s5);
+
+        // displayStocks(stocks);
+        // Search by date
+        //  System.out.println("");
+        // searchDate(stocks, "6/12/2006");
+        // System.out.println("");
+        // searchDate(stocks, "9/12/2006");
+        
+        // Search by object
+//        System.out.println("");
+//        StockPrice inp = new StockPrice("AAPL", "12/12/2006",
+//                90.025, 90.5, 86.9, 87.04, 35886700);
+//        searchMatch(stocks, inp);
+//
+//        System.out.println("");
+//        inp = new StockPrice("AAPL", "7/12/2006",
+//                90.025, 90.5, 86.9, 87.04, 35886700);
+//        searchMatch(stocks, inp);
+//
+//        System.out.println("");
+//        inp = new StockPrice("AAPL", "14/12/2006",
+//                90.025, 90.5, 86.9, 87.04, 35886700);
+//        searchMatch(stocks, inp);
+        
+        // Remove objects
+        System.out.println("");
+        StockPrice inp = new StockPrice("AAPL", "12/12/2006",
+                90.025, 90.5, 86.9, 87.04, 35886700);
+        removeStock(stocks, inp);
+
+        System.out.println("");
+        inp = new StockPrice("AAPL", "7/12/2006",
+                90.025, 90.5, 86.9, 87.04, 35886700);
+        removeStock(stocks, inp);
+
+        System.out.println("");
+        inp = new StockPrice("AAPL", "14/12/2006",
+                90.025, 90.5, 86.9, 87.04, 35886700);
+        removeStock(stocks, inp);
+        
+        // Write to file
+        FileUtils.writeFile("stockfile.csv", stocks);
+
+    }
+
+    // Display stocks
+    public static void displayStocks(List<StockPrice> stocks) {
+
+        for (StockPrice p : stocks) {
+            System.out.println("Ticker is " + p.toString());
+        }
+    }
+
+    // Search for a matching date
+    public static void searchDate(List<StockPrice> stocks, String date) {
+        // Search for a date, show information
+        System.out.println("Searching for: " + date);
+        boolean found = false;
+        for (StockPrice p : stocks) {
+
+            // Check date matches
+            if (p.getDate().equals(date)) {
+                System.out.println("Date found at: ticker: " + p.getTicker()
+                        + ", date: " + p.getDate() + ", closing: " + p.getClose());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No matching date found for " + date);
+        }
+    }
+
+    // Search for a matching date
+    public static void searchMatch(List<StockPrice> stocks, StockPrice sp) {
+
+        boolean found = false;
+        for (StockPrice p : stocks) {
+
+            // Check date matches
+            if (p.equals(sp)) {
+                System.out.println("Object found at: ticker: " + p.getTicker()
+                        + ", date: " + p.getDate() + ", closing: " + p.getClose());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No matching date found, adding to list.");
+            stocks.add(sp);
+        }
+        System.out.println("Arraylist size is " + stocks.size());
+    }
+    
+    // Iterator to remove a stock
+    private static boolean removeStock(List<StockPrice> stocks, StockPrice sp) {
+        // set found variable to false
+        boolean found = false;
+
+        // create an iterator
+        Iterator iterator = stocks.iterator();
+
+        // Loop through iterator and search
+        while (iterator.hasNext()) {
+            
+            // Convert first value to stock
+           StockPrice sNext = (StockPrice)iterator.next();
+           
+           // tests
+          //  System.out.println(sNext.equals(sp));
+          //  System.out.println("");
+          
+            // check match
+            if (sNext.equals(sp)) {
+                System.out.println("Match found, removing from list");
+                iterator.remove();
+                found = true;
+            }
+        }
+        // if not found, report
+        if (!found) {
+            System.out.println("StockPrice not found, nothing removed");
+        }
+        // final mesage
+        System.out.println("Arraylist size is " + stocks.size());
+
+        return found;
+
+    }
+
+}
+
+
+
+//transaction
+
+package homework;
+
+import lab9.*;
+
+public class Transaction implements Comparable<Transaction> {
+    
+    
+
+    // Instance variables
+    private int sendCode;
+    private int receiveCode;
+    private String dateSend;
+    private String reason;
+    private double amount;
+    private String checkCode;
+
+    public Transaction() {
+        // Empty constructor  
+        // will create us some values
+        // Do not release
+    }
+
+// Constructor
+    public Transaction(int sendCode, int receiveCode, String dateSend,
+            String reason, double amount, String checkCode) {
+        // assign variables
+        this.sendCode = sendCode;
+        this.receiveCode = receiveCode;
+        this.dateSend = dateSend;
+        this.reason = reason;
+        this.amount = amount;
+        this.checkCode = checkCode;
+    }
+
+    // NEW constructor for week 9
+    public Transaction(String line) {
+        String[] bits = line.split(",");
+        //check data
+        if (bits.length != 6) {
+            System.out.println("Bad data in "
+                    + "Transaction constructor: " + line);
+            return;
+        }
+        sendCode = Integer.parseInt(bits[0]);
+        receiveCode = Integer.parseInt(bits[1]);
+        dateSend = bits[2];
+        reason = bits[3];
+        amount = Double.parseDouble(bits[4]);
+        checkCode = bits[5];
+    }
+
+    // Getters
+    public int getSendCode() {
+        return sendCode;
+    }
+    public int getReceiveCode() {
+        return receiveCode;
+    }
+    public String getDateSend() {
+        return dateSend;
+    }
+    public String getReason() {
+        return reason;
+    }
+    public double getAmount() {
+        return amount;
+    }
+    public String getCheckCode() {
+        return checkCode;
+    }
+    
+    public String toString() {
+        return "Transaction: sendcode= " + sendCode + " , receive= " + receiveCode
+                + " , dateSend= " + dateSend + " , reason= " + reason
+                + " , amount= " + amount + " , checkcode= " + checkCode;
+    }
+    
+    public boolean equals(Transaction other) {
+        if (this.sendCode !=other.getSendCode()) {
+            return false;
+        }
+        if (this.receiveCode !=other.getReceiveCode()) {
+            return false;
+        }
+        if (!this.dateSend.equals(other.getDateSend())) {
+            return false;
+        }
+        if (!this.reason.equals(other.getReason())) {
+            return false;
+        }
+        if (this.amount !=other.getAmount()) {
+            return false;
+        }
+        if (!this.checkCode.equals(other.getCheckCode())) {
+            return false;
+        }
+        return true;
+    }
+
+    // A new flatten method to write to file
+    public String flatten() {
+        return sendCode + "," + receiveCode + "," + dateSend + "," + reason + "," + amount + "," + checkCode;
+    }
+    
+    public int compareTo(Transaction toCompare){
+        int result;
+        // need to get the day
+        // we know month
+        String[] dates = dateSend.split("/");
+        String[] datesComp = toCompare.getDateSend().split("/");
+        int day = Integer.parseInt(dates[0]);
+        int dayComp = Integer.parseInt(datesComp[0]);
+        
+        result = result = Integer.compare(day,dayComp);
+        return result;
+    }
+
+    
+
+}
+
