@@ -11,13 +11,12 @@ import java.util.List;
 
 public class FileUtils {
     
-    // This shoudl all come from the lecture notes!
     public static void writeFile(String destination, List<StockPrice> toWrite) {
 
         Path path = Paths.get(destination);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
             for (StockPrice p : toWrite) {
-                // Will need to create a flattedn meth
+                
                 writer.write(p.flatten());
                 writer.newLine();
             }
@@ -42,11 +41,9 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class HW9 {
+public class HomeWork9 {
 
-    /**
-     * @param args the command line arguments
-     */
+  
     public static void main(String[] args) {
 
             
@@ -149,10 +146,6 @@ import java.util.List;
 
 
 public class Lab9 {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         // 5 Stock Prices
@@ -177,12 +170,7 @@ public class Lab9 {
         // System.out.println("");
         // searchDate(stocks, "9/12/2006");
         
-        // Search by object
-//        System.out.println("");
-//        StockPrice inp = new StockPrice("AAPL", "12/12/2006",
-//                90.025, 90.5, 86.9, 87.04, 35886700);
-//        searchMatch(stocks, inp);
-//
+ 
 //        System.out.println("");
 //        inp = new StockPrice("AAPL", "7/12/2006",
 //                90.025, 90.5, 86.9, 87.04, 35886700);
@@ -275,7 +263,7 @@ public class Lab9 {
             // Convert first value to stock
            StockPrice sNext = (StockPrice)iterator.next();
            
-           // tests
+         
           //  System.out.println(sNext.equals(sp));
           //  System.out.println("");
           
@@ -337,7 +325,7 @@ public class Transaction implements Comparable<Transaction> {
         this.checkCode = checkCode;
     }
 
-    // NEW constructor for week 9
+   
     public Transaction(String line) {
         String[] bits = line.split(",");
         //check data
@@ -402,7 +390,7 @@ public class Transaction implements Comparable<Transaction> {
         return true;
     }
 
-    // A new flatten method to write to file
+   
     public String flatten() {
         return sendCode + "," + receiveCode + "," + dateSend + "," + reason + "," + amount + "," + checkCode;
     }
