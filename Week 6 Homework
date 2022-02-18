@@ -1,0 +1,141 @@
+//lab 6
+public class Lab6 {
+
+    public static void main(String[] args) {
+        // Create 3 stock price plus
+      //  StockPricePlus sp1 = new StockPricePlus("AAPL", "2006-12-1", 91.8, 92.33, 90.1, 91.32, 28395700);
+     //  StockPricePlus sp2 = new StockPricePlus("AAPL", "2006-12-4", 91.88, 92.05, 90.5, 91.12, 25340600);
+     //   StockPricePlus sp3 = new StockPricePlus("AAPL", "2006-12-5", 91.655, 92.33, 90.87, 91.27, 23672800);
+
+        // Stage 1, Test toString
+        /* System.out.println("First call :" + sp1.toString());
+        System.out.println("");
+        System.out.println("Second call :" + sp1.toString());
+        System.out.println("");
+        System.out.println("Second call :" + sp2.toString());
+        System.out.println("");
+        System.out.println("Total number of queries: " + sp2.getNumOfQueries());
+         */
+        // Stage 2, Same again but using the arrayList within the SPP class
+       // sp1.printAllStocksCreated();
+
+        // Stage 3,  eekles
+        // create a stock price and a stockpriceplus
+        StockPrice convert1 = new StockPrice("AAPL", "2006-12-1", 91.8, 92.33, 90.1, 91.32, 28395700);
+        StockPricePlus convert2 = new StockPricePlus("AAPL", "2006-12-4", 91.88, 92.05, 90.5, 91.12, 25340600);
+
+        System.out.println("");
+        // Try to convert first test
+        StockPricePlus spp1 = toStockPricePlus(convert1);
+        if (spp1 == null) {
+            System.out.println("Failed to convert.");
+        } else {
+            System.out.println("Succeed");
+        }
+        StockPricePlus spp2 = toStockPricePlus(convert2);
+        if (spp2 == null) {
+            System.out.println("Failed to convert.");
+        } else {
+            System.out.println("Succeed");
+        }
+
+    }
+
+    // Stage 3 method
+    public static StockPricePlus toStockPricePlus(StockPrice sp) {
+        // So we want to check type of variable
+
+        // Check if input variable is an instance of StockPricePlus
+        if (sp instanceof StockPricePlus) {
+            // if it is, then return a null, as no need to convert
+            return null;
+        } else {
+            // else, create a StockPricePlus, calling constructor, and pass in
+            StockPricePlus output = new StockPricePlus(sp.getTicker(), sp.getDate(), sp.getOpen(),
+            sp.getHigh(), sp.getLow(), sp.getClose(), sp.getVolume());
+            return new StockPricePlus();
+        }
+  
+  
+    }
+
+}
+
+
+//Stockprice plus
+
+
+package lab6;
+
+import java.util.List;
+
+
+public class StockPricePlus extends StockPrice {
+    
+    // count number of queries
+    private int queryCount;
+    
+    // variable to count number created
+    private static int totalCreated;
+    
+    // Static list to store total number of queries
+    private static int totalQueryCount;
+    
+    // Our static ArrayList of StockPricePlus objects does it not over overwrite?
+    private static StockPricePlus[] stocksCreated = new StockPricePlus[20];
+    
+    // Constructor to create object
+    public StockPricePlus(String ticker, String date, double open, double high, double low, double close, long volume) {
+        // Refers to superclass (StockPrice)
+        super(ticker, date, open, high, low, close, volume);
+        queryCount = 0;
+
+        // add self to own list, my god.
+        stocksCreated[totalCreated] =this;
+        totalCreated++;
+    }
+    
+    // Empty Constructor
+    public StockPricePlus() {
+        // EMpty
+    }
+    
+    // To string method
+    // Every time its called, add one to query
+    public String toString(){
+        
+        // Add to queryCount
+        queryCount++;
+        
+        // Add to static total
+        totalQueryCount++;
+        
+        return "Stock: ticker= " + super.getTicker() + " , date= " + super.getDate() +
+                " , opening price= " + super.getOpen() + " ,\n closing price= " + super.getClose() +
+                " , high= " + super.getHigh() + " , low= " + super.getLow() +
+                " , volume= " + super.getVolume() + ", Queries: " + queryCount;
+    }
+
+    // Return the query count
+    public int getQueryCount() {
+        return queryCount;
+    }
+    
+    // Returns the total number of queries by all;
+    public int getNumOfQueries(){
+        return totalQueryCount;
+    }
+    
+    public void printAllStocksCreated(){
+        // method to print all stocks
+        // go through array and print strings, only count number created
+        for(int i = 0; i<totalCreated;i++){
+            
+            StockPricePlus sp = stocksCreated[i];
+            System.out.println(sp.toString());
+            System.out.println("");
+        }
+    }
+       
+}
+
