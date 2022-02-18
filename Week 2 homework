@@ -1,0 +1,168 @@
+//Calculations
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+/**
+ *
+ * @author Ace
+ */
+public class CalculationsHW {
+    
+    public static void main(String[] args) {
+        // System.out.println("Hello");
+
+        // int num1 =5;
+        // int num2 =7;
+        //  int num3 =4;
+        // int num4 =2;
+        // int num5 =2;
+        //  int calculation = num1 * num2 + num3 - num4  /  num5; 
+        //System.out.println("5 * 7 + 4 - 2 / 2 = 38");
+        // System.out.println(""+num1 +" * "+ num2 +" + "+ num3 +" - "+ num4 +" / "+ num5 +" = 38");
+        //  System.out.println(""+num1 +" * "+ num2 +" + "+ num3 +" - "+ num4 +" / "+ num5 +" = "+calculation);
+
+       /* 
+        int num1 =2;
+        int num2 =3;
+        int solution = num1+num2;
+        int solution2 = num1-num2;
+        int solution3 = num1*num2;
+        int solution4 = num1/num2;
+        int solution5 = num1%num2;
+        System.out.println("The solution to num1+num2 is " +solution );
+        System.out.println("The solution to num1-num2 is " +solution2 );
+        System.out.println("The solution to num1*num2 is " +solution3 );
+        System.out.println("The solution to num1/num2 is " +solution4 );
+        System.out.println("The solution to num1%num2 is " +solution5 );
+        
+        double calcVal1 = 4;
+        double calcVal2 = 8;
+        double calcVal3 = -1;
+        
+        double complexCalc = calcVal1 + calcVal2 * calcVal3 - calcVal1 + calcVal1 /calcVal2 + calcVal3; 
+        System.out.println(complexCalc);
+        
+        double complexCalc2 = (calcVal1 + calcVal2)* calcVal3 - (calcVal1 + calcVal1)/calcVal2 + calcVal3;
+        System.out.println(complexCalc2);
+        
+        System.out.println(Math.PI);
+        double sq = Math.sqrt(5);
+        System.out.println(sq);
+        
+        double rand = Math.random()*10;
+        System.out.println("The random value is " + rand);
+            */
+       
+        // A first IF statement, with else, and random numbers
+      /*
+       double numA = Math.random()*10;
+       double numB = Math.random()*10;
+       double ans = 3*numA + numB-1;
+       System.out.println(ans);
+*/
+
+     //  if(ans>10){
+     //      System.out.println("Greater than 10");
+     //  }
+     //  if(ans<=10){
+     //      System.out.println("10 or less");
+      // }
+     /*  
+        if(ans>10){
+           System.out.println("Greater than 10");
+       }
+       else{
+           System.out.println("10 or less");
+       }
+*/
+        // variables declared
+        double radius = 3;
+	double area;
+        int threshold = 50;
+        
+        // Area calculated
+	area = Math.PI* Math.pow(radius, 2);
+        
+        // Result displayed
+        System.out.println("The radius is " + radius);
+        System.out.println("area is " + area);
+        
+        if(area>threshold){
+           System.out.println("This is a small circle");
+       }
+       else{
+           System.out.println("This is a big circle");
+       }
+        
+    }
+
+
+    
+}
+
+
+//Lab2 homework
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+/**
+ *
+ * @author Ace
+ */
+public class Lab2HelloHomework {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        
+        
+        String myName = "Yang";
+        String interesting = "a vegan butcher";
+        String school = "Arbroath";
+        String home = "Suzhou";
+        int age = 33;
+        int studentId = 987654321;
+        
+        // define if the person is male or female
+        boolean female = true;
+        
+        
+        // 2 variables to define he/she, his/her
+        String gender1;
+        String gender2;
+        // checks gender and assigns values to variables
+        if(female==true){
+            gender1 = "she";
+            gender2 = "her";
+        }
+        else{
+            gender1 = "he";
+            gender2 = "his";
+        }
+        
+        // System.out.print("Hello World");
+        System.out.println("Hello "+ myName);
+        System.out.println(gender1+ " is "+ myName + ", and "+gender1+ " is "+ interesting);
+        System.out.println(gender2+ " name is "+ myName + ", " + gender2 + " school was "+ school + ", and "+gender2+" hometown is  "+ home + ".");
+        System.out.println("Name: "+ myName + ", Age:  "+ age + ", Student number:  "+ studentId);
+    }
+
+}
+
+
+
+
+
