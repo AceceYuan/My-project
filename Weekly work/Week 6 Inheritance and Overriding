@@ -16,7 +16,7 @@ public class Lab6 {
         System.out.println("");
         System.out.println("Total number of queries: " + sp2.getNumOfQueries());
          */
-        // Stage 2, Same again but using the arrayList within the SPP class
+        // Stage 2, using the arrayList within the SPP class
        // sp1.printAllStocksCreated();
 
         // Stage 3,  eekles
@@ -25,7 +25,7 @@ public class Lab6 {
         StockPricePlus convert2 = new StockPricePlus("AAPL", "2006-12-4", 91.88, 92.05, 90.5, 91.12, 25340600);
 
         System.out.println("");
-        // Try to convert first test
+        //convert first test
         StockPricePlus spp1 = toStockPricePlus(convert1);
         if (spp1 == null) {
             System.out.println("Failed to convert.");
@@ -43,7 +43,7 @@ public class Lab6 {
 
     // Stage 3 method
     public static StockPricePlus toStockPricePlus(StockPrice sp) {
-        // So we want to check type of variable
+        //check type of variable
 
         // Check if input variable is an instance of StockPricePlus
         if (sp instanceof StockPricePlus) {
@@ -72,16 +72,14 @@ import java.util.List;
 
 public class StockPricePlus extends StockPrice {
     
-    // count number of queries
-    private int queryCount;
     
-    // variable to count number created
+    private int queryCount;
     private static int totalCreated;
     
     // Static list to store total number of queries
     private static int totalQueryCount;
     
-    // Our static ArrayList of StockPricePlus objects does it not over overwrite?
+    
     private static StockPricePlus[] stocksCreated = new StockPricePlus[20];
     
     // Constructor to create object
@@ -97,38 +95,31 @@ public class StockPricePlus extends StockPrice {
     
     // Empty Constructor
     public StockPricePlus() {
-        // EMpty
+        
     }
     
-    // To string method
-    // Every time its called, add one to query
+   
     public String toString(){
-        
-        // Add to queryCount
-        queryCount++;
-        
-        // Add to static total
-        totalQueryCount++;
-        
+        queryCount++;       
+        totalQueryCount++;       
         return "Stock: ticker= " + super.getTicker() + " , date= " + super.getDate() +
                 " , opening price= " + super.getOpen() + " ,\n closing price= " + super.getClose() +
                 " , high= " + super.getHigh() + " , low= " + super.getLow() +
                 " , volume= " + super.getVolume() + ", Queries: " + queryCount;
     }
 
-    // Return the query count
+    
     public int getQueryCount() {
         return queryCount;
     }
     
-    // Returns the total number of queries by all;
+    
     public int getNumOfQueries(){
         return totalQueryCount;
     }
     
     public void printAllStocksCreated(){
-        // method to print all stocks
-        // go through array and print strings, only count number created
+        
         for(int i = 0; i<totalCreated;i++){
             
             StockPricePlus sp = stocksCreated[i];
