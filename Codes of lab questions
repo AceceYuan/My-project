@@ -1,0 +1,305 @@
+// NO1. add code
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CW2;
+
+/**
+ *
+ * @author dell
+ */
+public class AddCode {
+    public int addCode(String code){
+        int password = 0;
+        String digit = "";
+        for(int i = 0; i < code.length(); i++){
+            boolean isDigit;
+            if(Character.isDigit(code.charAt(i))){
+                password += i;
+                digit += code.charAt(i);
+                isDigit = true;
+                while(isDigit){
+                    if(i < code.length() - 1){
+                        if(Character.isDigit(code.charAt(i+1))){
+                            digit += code.charAt(i+1);
+                            i++;
+                        }
+                        else{
+                            isDigit = false;
+                            password += Integer.parseInt(digit);
+                            digit = "";
+                        }
+                    }
+                    else{
+                        isDigit = false;
+                        password += Integer.parseInt(digit);
+                    }
+                }
+            }
+        }
+        return password;
+    }
+}
+
+
+
+//NO.2 begin again friend
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CW2;
+
+/**
+ *
+ * @author dell
+ */
+public class BeginEndFriend {
+    public String beginEndFriend(String input){
+        String begin = "";
+        boolean hasFriend = true;
+        switch(input.length()){
+        case 0:
+        case 1: 
+            hasFriend = false;
+            break;
+        case 2:
+            if(input.charAt(0) == input.charAt(1)){
+                begin += input.charAt(0);
+            }
+            if(input.contains("x") && !input.equals("xx")){
+                hasFriend = false;
+            }
+            break;
+        default :
+            int length = 0;
+            for(int i = 0; i < input.length(); i++){
+                int currentLength;
+                if(i < (input.length()-1)/2){
+                    begin += input.charAt(i);
+                    if(input.endsWith(begin)){
+                        currentLength = i + 1;
+                        if(currentLength > length){
+                            length = currentLength;
+                        }
+                    }
+                }
+            }
+            begin = input.substring(0, length);
+            
+            for(int i = 0; i < input.length(); i++){
+                if(input.startsWith("x")){
+                    if(input.charAt(1) == 'x'){
+                    }
+                    else{
+                        hasFriend = false;
+                    }
+                }
+                if( i != 0 && i != input.length()-1 && input.charAt(i) == 'x'){
+                    if( input.charAt(i-1) == 'x' || input.charAt(i+1) == 'x'){
+                    }
+                    else{
+                        hasFriend = false;
+                    }
+                }
+                if(input.endsWith("x")){
+                    if(input.charAt(input.length()-2) == 'x'){
+                    }
+                    else{
+                        hasFriend = false;
+                    }
+                }
+            }
+        }
+        return begin + ","+hasFriend;
+    }
+}
+
+
+
+//NO.3 change domain
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CW2;
+
+/**
+ *
+ * @author dell
+ */
+public class ChangeDomain {
+    public String changeDomain(String line){
+        String result = "";
+        for(int i = 0; i < line.length(); i++){
+            result += line.charAt(i);
+            boolean isFormat = false;
+            if( Character.isLetter(line.charAt(i)) || line.charAt(i) == '.' || line.charAt(i) == '-' ){
+                isFormat = true;
+                while(isFormat){
+                    if(i < line.length()-1){
+                        if( Character.isLetter(line.charAt(i+1)) || line.charAt(i+1) == '.' || line.charAt(i+1) == '-' ){
+                            result += line.charAt(i+1);
+                            i++;
+                        }
+                        else if(line.charAt(i+1) == '@'){
+                            result += line.charAt(i+1);
+                            isFormat = false;
+                            int num = 0;
+                            boolean isLetter = true;
+                            while(isLetter){
+                                if(Character.isLetter(line.charAt(i+2))){
+                                    i++;
+                                    num++;
+                                }
+                                else{
+                                    isLetter = false;
+                                    if(line.substring(i+2, i+6).equals(".com")){
+                                        result += "xjtlu.edu.cn";
+                                        i += 5;
+                                    }
+                                    else{
+                                        result += line.substring(i+2-num, i+6);
+                                        i += 5;
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            isFormat = false;
+                        }
+                    }
+                    else{
+                        isFormat = false;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+
+
+//No.4 CW Exercise2
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cw.ex2;
+/**
+ *
+ * @author Acece
+ */
+public class CWEx2 {
+
+    /**
+     * @param args the command line arguments
+     
+     */
+    public static int iFollowU(String inputs){
+   int i; 
+    int count=0;
+    for(i=0;i<inputs.length()-1;i++){
+    if(inputs.substring(i,i+1).equals("i")){ 
+    if (inputs.substring(i+1,i+2).equals("u")) {
+     count++;
+         
+           }  
+        }
+
+              }
+    return count;
+    }
+}
+    
+
+//NO.5 longest reverse
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CW2;
+
+/**
+ *
+ * @author dell
+ */
+public class LongestReverse {
+    public String longestReverse(String input){
+        int longest = 0;
+        String which = "";
+        String beginAndEnd = ""; 
+        
+        switch(input.length()){
+        case 1:
+            longest = 1;
+            which = input;
+            break;
+        default:
+            for(int i = 1; i<input.length(); i++){
+                int currentLongest = 1;
+                boolean isEquals = true;
+                while(isEquals){
+                    if(input.charAt(i-1) == input.charAt(i)){
+                        currentLongest++;
+                        i++;
+                    }
+                    else{
+                        isEquals = false;
+                    }
+                    if(i >= input.length()){
+                        isEquals = false;
+                    }
+                }
+                if(currentLongest > longest){
+                    longest = currentLongest;
+                    which = input.substring(i - currentLongest, i);
+                }
+            }
+        }
+
+        for(int i = 0; i < input.length(); i++){
+            int j = input.length()-1;
+            boolean isEquals = true;
+            while(isEquals){
+                if(i < input.length()){
+                    if(input.charAt(i) == input.charAt(j)){
+                        beginAndEnd += input.charAt(i);
+                        i++;
+                        j--;
+                    }
+                    else{
+                        isEquals = false;
+                        i = input.length() - 1;
+                    }
+                }
+                else{
+                    isEquals = false;
+                }
+            }
+        }
+//        if(beginAndEnd.equals("")){
+//            beginAndEnd = "the beginning and the end are different";
+//        }
+        return longest+","+beginAndEnd;
+    }
+}
+
+
+//NO.6 longest reverse
+
