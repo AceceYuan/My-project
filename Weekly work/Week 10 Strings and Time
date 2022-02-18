@@ -1,5 +1,5 @@
 //Event
-package lab12.time;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,7 +74,7 @@ public class Memory {
     }
 
     public Memory() {
-        // System.out.println("Memories Constructor");
+        System.out.println("Memories Constructor");
 
         // add memories
         addMemories();
@@ -120,7 +120,7 @@ public class Memory {
     }
 
     private void addMemories() {
-        // Constructor to add 3 memories
+       =
 
         LocalDateTime eventStart = LocalDateTime.of(2017, Month.MARCH, 7, 12, 0, 0);
         LocalDateTime eventEnd = eventStart.plusWeeks(6);
@@ -139,9 +139,7 @@ public class Memory {
     }
 
     private void checkMemory(LocalDateTime d) {
-        // Receives a date
-        // Check by iterating through loop
-        // If any events on that day, then display a message
+      =
 
         ListIterator<Event> iter = myEvents.listIterator();
 
@@ -182,13 +180,12 @@ public class Validate {
 
 public static boolean validateString(String input) {
     
-        //HIDE
-        //EDIT 
+     
 String name = "enter name here";
-    //EDIT 
+  
 String student_id = "enter student id here";
     
-    //HIDE
+
         // Check the length of the string first, does it match
         // a valid string is 22 characters
         if(input.length()!= 22){
@@ -209,9 +206,7 @@ String student_id = "enter student id here";
             return false;
         }
         
-        // If it passes this stage, next, check hyphens
-        // Check character at 8, 10, 14, 20
-        // Dont have to do it in separate methods
+      
     	if(input.charAt(8)!='-'){
     		//System.out.print("Hyphen is wrong.  ");
             return false;
@@ -244,7 +239,7 @@ String student_id = "enter student id here";
 			return false;
 		}
         return true;
-//EDIT
+
     }
 
 }
