@@ -1,0 +1,279 @@
+//add to array list
+
+
+package lab12;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ *
+ * @author ace
+
+ */
+public class Lab12 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+       List<StockPrice> stocks=  FileUtils.readFile("prices50Lines.csv");
+       
+       Collections.sort(stocks);
+       
+       for(StockPrice s : stocks){
+           System.out.println(s.toString());
+       }
+       
+       FileUtils.writeFile("sorted.csv", stocks);
+        
+        
+//        // 5 Stock Prices
+//        StockPrice s1 = new StockPrice("AAPL", "1/12/2006", 91.8, 92.33, 90.1, 91.32, 28395700);
+//        StockPrice s2 = new StockPrice("AAPL", "4/12/2006", 91.88, 92.05, 90.5, 91.12, 25340600);
+//        StockPrice s3 = new StockPrice("AAPL", "5/12/2006", 91.655, 92.33, 90.87, 91.27, 23672800);
+//        StockPrice s4 = new StockPrice("AAPL", "6/12/2006", 90.645, 91.39, 89.67, 89.83, 22792300);
+//        StockPrice s5 = new StockPrice("AAPL", "7/12/2006", 90.025, 90.5, 86.9, 87.04, 35886700);
+//
+//        // add to an arraylist
+//        List<StockPrice> stocks = new ArrayList<>();
+//        stocks.add(s1);
+//        stocks.add(s2);
+//        stocks.add(s3);
+//        stocks.add(s4);
+//        stocks.add(s5);
+//
+//        // Write to file
+//        FileUtils.writeFile("stockfile.csv", stocks);
+    }
+    
+    
+    
+    
+    
+}
+
+
+//stock
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab12;
+
+import java.time.LocalDate;
+import java.time.Month;
+
+public class StockPrice implements Comparable<StockPrice>{
+    // Instance variables
+    private String ticker;
+    private LocalDate date;
+    private double open, high, low, close;
+    private long volume;
+    
+    public StockPrice() {
+     // Empty constructor  
+    }
+    
+// Constructor
+    public StockPrice(String ticker, String date, double open, 
+            double high, double low, 
+            double close, long volume) {
+        // assign variables
+        this.ticker = ticker;
+        this.date = createDate(date);
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
+        
+        // System.out
+        System.out.println("Stock " + ticker + " " + date + " created.");
+    }
+    
+    // NEW constructor for week 9
+    public StockPrice(String line) {
+        String[] bits = line.split(",");
+        //check data
+        if (bits.length != 7) {
+            System.out.println("Bad data in "
+                    + "StockPrice constructor: " + line);
+            return;
+        }
+        ticker = bits[0];
+        date = createDate(bits[1]);
+        open = Double.parseDouble(bits[2]);
+        high = Double.parseDouble(bits[3]);
+        low = Double.parseDouble(bits[4]);
+        close = Double.parseDouble(bits[5]);
+        volume = Long.parseLong(bits[6]);
+        //System.out.println(this);
+    }
+    
+    
+    
+    // Getters
+    public String getTicker() {
+        return ticker;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public double getOpen() {
+        return open;
+    }
+
+    public double getHigh() {
+        return high;
+    }
+
+    public double getLow() {
+        return low;
+    }
+
+    public double getClose() {
+        return close;
+    }
+
+    public long getVolume() {
+        return volume;
+    }
+    // spread method
+    public double getSpread(){
+        return high - low;
+    }
+    
+    public String toString(){
+        return "Stock: ticker= " + ticker + " , date= " + date +
+                " , opening price= " + open + " , closing price= " + close +
+                " , high= " + high + " , low= " + low +
+                " , volume= " + volume;
+    }
+
+    
+    public boolean equals(StockPrice other){
+        if(!this.ticker.equals(other.getTicker())){
+            return false;
+        }
+        if(!this.date.equals(other.getDate())){
+            return false;
+        }
+        if(this.open != other.getOpen()){
+            return false;
+        }
+        if(this.high != other.getHigh()){
+            return false;
+        }
+        if(this.low != other.getLow()){
+            return false;
+        }
+        if(this.close != other.getClose()){
+            return false;
+        }
+        if(this.volume != other.getVolume()){
+            return false;
+        }
+        return true;
+    }
+
+    // A new flatten method to write to file
+    public String flatten() {
+        return ticker + "," + date + "," + open + "," + close + "," + high + "," + low + "," + volume;
+    }
+    
+    // a method to create a date
+    private LocalDate createDate(String dateIn){
+        String[] dates = dateIn.split("/");
+        
+        int day = Integer.parseInt(dates[0]);
+        int month = Integer.parseInt(dates[1]);
+        int year = Integer.parseInt(dates[2]);
+        
+        LocalDate combine = LocalDate.of(year,month,day);
+        return combine;
+    }
+    
+    public int compareTo(StockPrice toCompare){
+
+        // Compare dates
+        LocalDate first = this.date;
+        LocalDate comp = toCompare.getDate();
+        
+        
+        if(first.equals(comp)){
+            return 0;
+        }
+        else if(first.isAfter(date)){
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    }
+          
+}
+
+
+//read file
+
+
+package lab12;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Ace
+ */
+public class FileUtils {
+    
+    // This shoudl all come from the lecture notes!
+    public static void writeFile(String destination, List<StockPrice> toWrite) {
+
+        Path path = Paths.get(destination);
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            for (StockPrice p : toWrite) {
+                // Will need to create a flattedn meth
+                writer.write(p.flatten());
+                writer.newLine();
+            }
+            System.out.println("File Written");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static List<StockPrice> readFile(String filename) {
+
+        // Create an empty array list and get the file
+        List<StockPrice> results = new ArrayList<>();
+        Path path = Paths.get(filename);
+
+        // Read each line from file
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+               // System.out.println(line);
+                results.add(new StockPrice(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+}
+
